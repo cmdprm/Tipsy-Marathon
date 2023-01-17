@@ -17,6 +17,13 @@ class MainViewController: UIViewController {
     
     let backgroundView = UIView()
     
+    let tipStackView = UIStackView()
+    let tipLabel = UILabel()
+    let buttonStack = UIStackView()
+    let firstButton = UIButton(type: .system)
+    let secondButton = UIButton(type: .system)
+    let thirdButton = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
@@ -49,15 +56,45 @@ extension MainViewController {
         // BackgroundView
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.backgroundColor = .systemGreen
+        
+        // TipStackView
+        tipStackView.translatesAutoresizingMaskIntoConstraints = false
+        tipStackView.axis = .vertical
+        tipStackView.spacing = 8
+        tipStackView.alignment = .center
+        
+        // TipLabel
+        Styles.setupTitleLabel(label: tipLabel, title: "Select Tip")
+        
+        // ButtonStack
+        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+        buttonStack.axis = .horizontal
+        buttonStack.distribution = .equalSpacing
+        
+        // FirstButton
+        Styles.setupTipButton(button: firstButton, title: "0%")
+        
+        // SecondButton
+        Styles.setupTipButton(button: secondButton, title: "10%")
+        
+        // ThirdButton
+        Styles.setupTipButton(button: thirdButton, title: "20%")
     }
     
     func layout() {
         billStackView.addArrangedSubview(billLabel)
         billStackView.addArrangedSubview(billField)
         
+        tipStackView.addArrangedSubview(tipLabel)
+        buttonStack.addArrangedSubview(firstButton)
+        buttonStack.addArrangedSubview(secondButton)
+        buttonStack.addArrangedSubview(thirdButton)
+        tipStackView.addArrangedSubview(buttonStack)
+        
         view.addGestureRecognizer(tap)
         view.addSubview(billStackView)
         view.addSubview(backgroundView)
+        view.addSubview(tipStackView)
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -75,6 +112,27 @@ extension MainViewController {
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        // TipStackView
+        NSLayoutConstraint.activate([
+            tipStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 20),
+            tipStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
+            backgroundView.trailingAnchor.constraint(equalTo: tipStackView.trailingAnchor, constant: 20),
+            tipStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        
+        // ButtonStack
+        NSLayoutConstraint.activate([
+            buttonStack.leadingAnchor.constraint(equalTo: tipStackView.leadingAnchor, constant: 20),
+            tipStackView.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor, constant: 20),
+        ])
+        
+        // Buttons
+        NSLayoutConstraint.activate([
+            firstButton.widthAnchor.constraint(equalToConstant: 80),
+            secondButton.widthAnchor.constraint(equalToConstant: 80),
+            thirdButton.widthAnchor.constraint(equalToConstant: 80),
         ])
     }
 }

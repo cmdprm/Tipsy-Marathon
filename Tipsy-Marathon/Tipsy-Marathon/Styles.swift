@@ -17,4 +17,13 @@ class Styles {
         label.text = title
     }
     
+    static func setupTipButton(button: UIButton, title: String) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .systemGray
+        button.setTitle(title, for: [])
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
+        button.titleLabel?.textColor = .systemGreen
+        button.backgroundColor = .systemRed
+        button.layer.cornerRadius = 8
+    }
 }
