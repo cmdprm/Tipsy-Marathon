@@ -24,6 +24,14 @@ class MainViewController: UIViewController {
     let secondButton = UIButton(type: .system)
     let thirdButton = UIButton(type: .system)
     
+    let personStackView = UIStackView()
+    let personLabel = UILabel()
+    let counterStackView = UIStackView()
+    let counterLabel = UILabel()
+    let counterStepper = UIStepper()
+    
+    let calculateButton = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
@@ -51,11 +59,11 @@ extension MainViewController {
         billField.keyboardType = .decimalPad
         billField.font = UIFont.systemFont(ofSize: 44)
         billField.textAlignment = .center
-        billField.textColor = .systemGreen
+        billField.textColor = UIColor(named: "DarkGreen")
         
         // BackgroundView
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.backgroundColor = .systemGreen
+        backgroundView.backgroundColor = UIColor(named: "LightGreen")
         
         // TipStackView
         tipStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +87,34 @@ extension MainViewController {
         
         // ThirdButton
         Styles.setupTipButton(button: thirdButton, title: "20%")
+        
+        // PersonStackView
+        personStackView.translatesAutoresizingMaskIntoConstraints = false
+        personStackView.axis = .vertical
+        personStackView.spacing = 8
+        personStackView.alignment = .center
+        
+        // PersonLabel
+        Styles.setupTitleLabel(label: personLabel, title: "Choose Split")
+        
+        // CounterStackView
+        counterStackView.translatesAutoresizingMaskIntoConstraints = false
+        counterStackView.axis = .horizontal
+        counterStackView.distribution = .fill
+        
+        // CounterLabel
+        counterLabel.translatesAutoresizingMaskIntoConstraints = false
+        counterLabel.textColor = UIColor(named: "DarkGreen")
+        counterLabel.font = UIFont.systemFont(ofSize: 30)
+        counterLabel.text = "2343"
+        
+        // CalculateButton
+        calculateButton.translatesAutoresizingMaskIntoConstraints = false
+        calculateButton.tintColor = .white
+        calculateButton.backgroundColor = UIColor(named: "DarkGreen")
+        calculateButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        calculateButton.layer.cornerRadius = 8
+        calculateButton.setTitle("Calculate", for: [])
     }
     
     func layout() {
@@ -91,10 +127,17 @@ extension MainViewController {
         buttonStack.addArrangedSubview(thirdButton)
         tipStackView.addArrangedSubview(buttonStack)
         
+        personStackView.addArrangedSubview(personLabel)
+        counterStackView.addArrangedSubview(counterLabel)
+        counterStackView.addArrangedSubview(counterStepper)
+        personStackView.addArrangedSubview(counterStackView)
+        
         view.addGestureRecognizer(tap)
         view.addSubview(billStackView)
         view.addSubview(backgroundView)
         view.addSubview(tipStackView)
+        view.addSubview(personStackView)
+        view.addSubview(calculateButton)
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -133,6 +176,28 @@ extension MainViewController {
             firstButton.widthAnchor.constraint(equalToConstant: 80),
             secondButton.widthAnchor.constraint(equalToConstant: 80),
             thirdButton.widthAnchor.constraint(equalToConstant: 80),
+        ])
+        
+        // PersonStackView
+        NSLayoutConstraint.activate([
+            personStackView.topAnchor.constraint(equalTo: tipStackView.bottomAnchor, constant: 20),
+            personStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
+            backgroundView.trailingAnchor.constraint(equalTo: personStackView.trailingAnchor, constant: 20),
+            personStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        
+        // CounterStackView
+        NSLayoutConstraint.activate([
+            counterStackView.leadingAnchor.constraint(equalTo: personStackView.leadingAnchor, constant: 30),
+            personStackView.trailingAnchor.constraint(equalTo: counterStackView.trailingAnchor, constant: 30),
+        ])
+        
+        // CalculateButton
+        NSLayoutConstraint.activate([
+            safeArea.bottomAnchor.constraint(equalTo: calculateButton.bottomAnchor, constant: 20),
+            calculateButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 40),
+            backgroundView.trailingAnchor.constraint(equalTo: calculateButton.trailingAnchor, constant: 40),
+            calculateButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
 }
