@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE7276E229761ED5002C17C9 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7276E129761ED5002C17C9 /* Styles.swift */; };
+		CEAFD8E52978497E003206E4 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFD8E42978497E003206E4 /* AlertView.swift */; };
 		CEC79EED29760B0800C6D051 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC79EEC29760B0800C6D051 /* AppDelegate.swift */; };
 		CEC79EF129760B0800C6D051 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC79EF029760B0800C6D051 /* MainViewController.swift */; };
 		CEC79EF629760B0900C6D051 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC79EF529760B0900C6D051 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		CE7276E129761ED5002C17C9 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		CEAFD8E42978497E003206E4 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		CEC79EE929760B0800C6D051 /* Tipsy-Marathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tipsy-Marathon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC79EEC29760B0800C6D051 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEC79EF029760B0800C6D051 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC79EEC29760B0800C6D051 /* AppDelegate.swift */,
+				CEAFD8E42978497E003206E4 /* AlertView.swift */,
 				CE7276E129761ED5002C17C9 /* Styles.swift */,
 				CEC79EF029760B0800C6D051 /* MainViewController.swift */,
 				CEC79EF529760B0900C6D051 /* Assets.xcassets */,
@@ -135,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7276E229761ED5002C17C9 /* Styles.swift in Sources */,
+				CEAFD8E52978497E003206E4 /* AlertView.swift in Sources */,
 				CEC79EF129760B0800C6D051 /* MainViewController.swift in Sources */,
 				CEC79EED29760B0800C6D051 /* AppDelegate.swift in Sources */,
 			);

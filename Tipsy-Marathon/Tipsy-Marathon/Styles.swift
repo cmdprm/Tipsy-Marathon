@@ -25,4 +25,13 @@ class Styles {
         button.backgroundColor = UIColor(named: "DarkGreen")
         button.layer.cornerRadius = 8
     }
+    
+    static func setupTipInactiveButton(button: UIButton, title: String) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: [])
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
+        button.layer.cornerRadius = 8
+        button.tintColor = UIColor(named: "DarkGreen")
+        button.backgroundColor = .none
+    }
 }

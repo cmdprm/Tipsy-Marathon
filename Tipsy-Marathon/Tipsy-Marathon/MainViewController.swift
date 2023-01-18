@@ -9,114 +9,182 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    let tap = UITapGestureRecognizer()
+    let tap: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer()
+        return tap
+    }()
     
-    let billStackView = UIStackView()
-    let billLabel = UILabel()
-    let billField = UITextField()
+    // BillStackView
+    let billStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .center
+        
+        return stackView
+    }()
     
-    let backgroundView = UIView()
+    let billLabel: UILabel = {
+        let label = UILabel()
+        
+        Styles.setupTitleLabel(label: label, title: "Enter Bill Total")
+        
+        return label
+    }()
     
-    let tipStackView = UIStackView()
-    let tipLabel = UILabel()
-    let buttonStack = UIStackView()
-    let firstButton = UIButton(type: .system)
-    let secondButton = UIButton(type: .system)
-    let thirdButton = UIButton(type: .system)
+    let billField: UITextField = {
+        let textField = UITextField()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "e.g. 1234"
+        textField.keyboardType = .decimalPad
+        textField.font = UIFont.systemFont(ofSize: 44)
+        textField.textAlignment = .center
+        textField.textColor = UIColor(named: "DarkGreen")
+        
+        return textField
+    }()
     
-    let personStackView = UIStackView()
-    let personLabel = UILabel()
-    let counterStackView = UIStackView()
-    let counterLabel = UILabel()
-    let counterStepper = UIStepper()
+    let backgroundView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "LightGreen")
+        
+        return view
+    }()
     
-    let calculateButton = UIButton(type: .system)
+    // TipStackView
+    let tipStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .center
+        
+        return stackView
+    }()
+    
+    let tipLabel: UILabel = {
+        let label = UILabel()
+        
+        Styles.setupTitleLabel(label: label, title: "Select Tip")
+        
+        return label
+    }()
+    let buttonStack: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        
+        return stackView
+    }()
+    let firstButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        Styles.setupTipButton(button: button, title: "0%")
+        
+        return button
+    }()
+    let secondButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        Styles.setupTipInactiveButton(button: button, title: "10%")
+        
+        return button
+    }()
+    let thirdButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        Styles.setupTipInactiveButton(button: button, title: "20%")
+        
+        return button
+    }()
+    
+    // PersonStackView
+    let personStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .center
+        
+        return stackView
+    }()
+    let personLabel: UILabel = {
+        let label = UILabel()
+        
+        Styles.setupTitleLabel(label: label, title: "Choose Split")
+        
+        return label
+    }()
+    let counterStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 80
+        
+        return stackView
+    }()
+    let counterLabel: UILabel = {
+        let label = UILabel()
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor(named: "DarkGreen")
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.text = "2"
+        
+        return label
+    }()
+    let counterStepper: UIStepper = {
+        let stepper = UIStepper()
+        
+        stepper.translatesAutoresizingMaskIntoConstraints = false
+        stepper.value = 2
+        stepper.minimumValue = 2
+        
+        return stepper
+    }()
+    
+    let calculateButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
+        button.backgroundColor = UIColor(named: "DarkGreen")
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        button.layer.cornerRadius = 8
+        button.setTitle("Calculate", for: [])
+        
+        return button
+    }()
+    
+    // MARK: - Vars
+    
+    var tipSelected: Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        style()
+        
+        tap.addTarget(self, action: #selector(tappedOnScreen))
+        firstButton.addTarget(self, action: #selector(tipButtonPressed), for: .primaryActionTriggered)
+        secondButton.addTarget(self, action: #selector(tipButtonPressed), for: .primaryActionTriggered)
+        thirdButton.addTarget(self, action: #selector(tipButtonPressed), for: .primaryActionTriggered)
+        counterStepper.addTarget(self, action: #selector(stepperValueChanged), for: .valueChanged)
+        calculateButton.addTarget(self, action: #selector(calculateButtonPressed), for: .primaryActionTriggered)
+        
         layout()
     }
 }
 
 extension MainViewController {
-    func style() {
-        // Tap
-        tap.addTarget(self, action: #selector(tappedOnScreen))
-        
-        // BillStackView
-        billStackView.translatesAutoresizingMaskIntoConstraints = false
-        billStackView.axis = .vertical
-        billStackView.spacing = 8
-        billStackView.alignment = .center
-        
-        // BillLabel
-        Styles.setupTitleLabel(label: billLabel, title: "Enter Bill Total")
-        
-        // BillField
-        billField.translatesAutoresizingMaskIntoConstraints = false
-        billField.placeholder = "e.g. 1234"
-        billField.keyboardType = .decimalPad
-        billField.font = UIFont.systemFont(ofSize: 44)
-        billField.textAlignment = .center
-        billField.textColor = UIColor(named: "DarkGreen")
-        
-        // BackgroundView
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.backgroundColor = UIColor(named: "LightGreen")
-        
-        // TipStackView
-        tipStackView.translatesAutoresizingMaskIntoConstraints = false
-        tipStackView.axis = .vertical
-        tipStackView.spacing = 8
-        tipStackView.alignment = .center
-        
-        // TipLabel
-        Styles.setupTitleLabel(label: tipLabel, title: "Select Tip")
-        
-        // ButtonStack
-        buttonStack.translatesAutoresizingMaskIntoConstraints = false
-        buttonStack.axis = .horizontal
-        buttonStack.distribution = .equalSpacing
-        
-        // FirstButton
-        Styles.setupTipButton(button: firstButton, title: "0%")
-        
-        // SecondButton
-        Styles.setupTipButton(button: secondButton, title: "10%")
-        
-        // ThirdButton
-        Styles.setupTipButton(button: thirdButton, title: "20%")
-        
-        // PersonStackView
-        personStackView.translatesAutoresizingMaskIntoConstraints = false
-        personStackView.axis = .vertical
-        personStackView.spacing = 8
-        personStackView.alignment = .center
-        
-        // PersonLabel
-        Styles.setupTitleLabel(label: personLabel, title: "Choose Split")
-        
-        // CounterStackView
-        counterStackView.translatesAutoresizingMaskIntoConstraints = false
-        counterStackView.axis = .horizontal
-        counterStackView.distribution = .fill
-        
-        // CounterLabel
-        counterLabel.translatesAutoresizingMaskIntoConstraints = false
-        counterLabel.textColor = UIColor(named: "DarkGreen")
-        counterLabel.font = UIFont.systemFont(ofSize: 30)
-        counterLabel.text = "2343"
-        
-        // CalculateButton
-        calculateButton.translatesAutoresizingMaskIntoConstraints = false
-        calculateButton.tintColor = .white
-        calculateButton.backgroundColor = UIColor(named: "DarkGreen")
-        calculateButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        calculateButton.layer.cornerRadius = 8
-        calculateButton.setTitle("Calculate", for: [])
-    }
-    
     func layout() {
         billStackView.addArrangedSubview(billLabel)
         billStackView.addArrangedSubview(billField)
@@ -188,8 +256,8 @@ extension MainViewController {
         
         // CounterStackView
         NSLayoutConstraint.activate([
-            counterStackView.leadingAnchor.constraint(equalTo: personStackView.leadingAnchor, constant: 30),
-            personStackView.trailingAnchor.constraint(equalTo: counterStackView.trailingAnchor, constant: 30),
+//            counterStackView.leadingAnchor.constraint(equalTo: personStackView.leadingAnchor, constant: 30),
+//            personStackView.trailingAnchor.constraint(equalTo: counterStackView.trailingAnchor, constant: 30),
         ])
         
         // CalculateButton
@@ -204,7 +272,72 @@ extension MainViewController {
 
 // MARK: - Actions
 extension MainViewController {
+    
     @objc func tappedOnScreen() {
         billField.resignFirstResponder()
+    }
+    
+    @objc func calculateButtonPressed() {
+        var bill: String?
+        
+        if billField.text != "" {
+            bill = billField.text
+        } else {
+            let alertVC = AlertView.giveAlert("Bill is empty!")
+            present(alertVC, animated: true)
+            return
+        }
+        guard let personCount = Float(counterLabel.text!) else { return }
+        
+        let calculatedBill = calculateBill(bill!)
+        let result = giveResult(calculatedBill, count: personCount)
+        
+        print(result)
+    }
+    
+    @objc func tipButtonPressed(_ sender: UIButton) {
+        guard let title = sender.currentTitle else { return }
+        
+        switchTip(title)
+    }
+    
+    private func giveResult(_ calculatedBill: Float, count: Float) -> String {
+        let result = calculatedBill / count
+        let formattedResult = String(format: "%.2f", result)
+        return formattedResult
+    }
+    
+    private func calculateBill(_ bill: String) -> Float {
+        let safeBill = Float(bill)!
+        
+        let totalBill: Float = safeBill + (safeBill * tipSelected/100)
+        
+        return totalBill
+    }
+    
+    private func switchTip(_ title: String) {
+        switch title {
+        case "0%":
+            tipSelected = 0.0
+            Styles.setupTipButton(button: firstButton, title: "0%")
+            Styles.setupTipInactiveButton(button: secondButton, title: "10%")
+            Styles.setupTipInactiveButton(button: thirdButton, title: "20%")
+        case "10%":
+            tipSelected = 10.0
+            Styles.setupTipInactiveButton(button: firstButton, title: "0%")
+            Styles.setupTipButton(button: secondButton, title: "10%")
+            Styles.setupTipInactiveButton(button: thirdButton, title: "20%")
+        case "20%":
+            tipSelected = 20.0
+            Styles.setupTipInactiveButton(button: firstButton, title: "0%")
+            Styles.setupTipInactiveButton(button: secondButton, title: "10%")
+            Styles.setupTipButton(button: thirdButton, title: "20%")
+        default:
+            print("Default")
+        }
+    }
+    
+    @objc func stepperValueChanged() {
+        counterLabel.text = "\(Int(counterStepper.value))"
     }
 }
