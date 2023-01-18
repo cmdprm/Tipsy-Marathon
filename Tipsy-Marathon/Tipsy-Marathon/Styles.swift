@@ -22,7 +22,7 @@ class Styles {
         button.tintColor = .white
         button.setTitle(title, for: [])
         button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
-        button.backgroundColor = UIColor(named: "DarkGreen")
+        button.backgroundColor = Colors.darkGreen
         button.layer.cornerRadius = 8
     }
     
@@ -31,7 +31,12 @@ class Styles {
         button.setTitle(title, for: [])
         button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
         button.layer.cornerRadius = 8
-        button.tintColor = UIColor(named: "DarkGreen")
+        button.tintColor = Colors.darkGreen
         button.backgroundColor = .none
     }
+}
+
+struct Colors {
+    static var darkGreen: UIColor { return UIColor(named: "DarkGreen")! }
+    static var lightGreen: UIColor { return UIColor(named: "LightGreen")! }
 }

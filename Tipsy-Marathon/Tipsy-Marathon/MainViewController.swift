@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
         textField.keyboardType = .decimalPad
         textField.font = UIFont.systemFont(ofSize: 44)
         textField.textAlignment = .center
-        textField.textColor = UIColor(named: "DarkGreen")
+        textField.textColor = Colors.darkGreen
         
         return textField
     }()
@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
         let view = UIView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(named: "LightGreen")
+        view.backgroundColor = Colors.lightGreen
         
         return view
     }()
@@ -137,7 +137,7 @@ class MainViewController: UIViewController {
         let label = UILabel()
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor(named: "DarkGreen")
+        label.textColor = Colors.darkGreen
         label.font = UIFont.systemFont(ofSize: 30)
         label.text = "2"
         
@@ -158,7 +158,7 @@ class MainViewController: UIViewController {
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
-        button.backgroundColor = UIColor(named: "DarkGreen")
+        button.backgroundColor = Colors.darkGreen
         button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         button.layer.cornerRadius = 8
         button.setTitle("Calculate", for: [])
@@ -292,7 +292,9 @@ extension MainViewController {
         let calculatedBill = calculateBill(bill!)
         let result = giveResult(calculatedBill, count: personCount)
         
-        print(result)
+        let resultVC = ResultViewController()
+        resultVC.result = result
+        present(resultVC, animated: true)
     }
     
     @objc func tipButtonPressed(_ sender: UIButton) {
